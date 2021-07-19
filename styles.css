@@ -27,7 +27,7 @@
     color: #F2EBD3;
   }
   
-  .status-action {
+  .status-player-action {
     display: flex;
     margin-top: 25px;
     font-size: 25px;
@@ -41,6 +41,17 @@
 
   .status span span {
     font-weight: bolder;
+  }
+
+  .diff {
+    margin-bottom: 5px;
+  }
+
+  #diff {
+    border: none;
+    border-radius: 2px;
+    padding: 0.25rem 0.25rem;
+    
   }
   
   .reset {

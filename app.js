@@ -6,6 +6,9 @@ const gamegrid = document.querySelector('.game-grid')
 // Grab all grid divs
 const gridDivs = document.querySelectorAll('.game-cell')
 
+// Grab Difficulty button
+const diff = document.querySelector('#diff')
+
 // Game variables
 let gameOnGoing = true
 let xNextTurn = true
@@ -128,6 +131,9 @@ reset.addEventListener('click', handleReset)
 for (const gridDiv of gridDivs) {
     gridDiv.addEventListener('click', handleCellClick)
 }
+
+diff.addEventListener('change', handleReset)
+
 
 // function computerTurn() {
 //     let valid = false
