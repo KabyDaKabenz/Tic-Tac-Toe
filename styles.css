@@ -43,15 +43,12 @@
     font-weight: bolder;
   }
 
-  .diff {
-    margin-bottom: 5px;
-  }
-
-  #diff {
+ #diff {
     border: none;
-    border-radius: 2px;
+    border-radius: 4px;
     padding: 0.25rem 0.25rem;
-    
+    background-color: #1effe9;
+    color: rgba(0, 0, 0, 0.9);
   }
   
   .reset {
