@@ -15,9 +15,8 @@ let xNextTurn = true
 let winner = null
 let xSymbol = '×'
 let oSymbol = '○'
-let playerTurn = true
 let mapping = {
-    1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'eight' 
+    1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine' 
 }
 
 
@@ -35,6 +34,7 @@ const handleWin = (letter) => {
     } else {
         status.innerHTML = `<span>${letterToSymbol(winner)} has won!</span>`
     }
+    reset.innerHTML = 'Restart'
 }
 
 const checkGameStatus = () => {
@@ -73,6 +73,7 @@ const checkGameStatus = () => {
         // Game is a tie
         gameOnGoing = false
         status.innerHTML = 'It is a tie!'
+        reset.innerHTML = 'Restart'
     } else {
         xNextTurn = !xNextTurn
         if(xNextTurn){
@@ -85,7 +86,6 @@ const checkGameStatus = () => {
 }
 
 const emptySpot = (classlist) => {
-    console.log(classlist.contains('x'))
     return !classlist.contains('x') && !classlist.contains('o')
 }
 
@@ -101,25 +101,42 @@ const handleReset = (e) => {
     }   
     winner = null
     gameOnGoing = true
+    reset.innerHTML = 'Reset'
 }
 
 const handleCellClick = (e) => {
     const classList = e.target.classList
-    
+    const difficulty = diff.options[diff.selectedIndex].value
     //If position is not occupied, allow user to place letter.
 
-    if(gameOnGoing && playerTurn) {
-        if(emptySpot(classList)){
-            if(xNextTurn){
-                 classList.add('x')
-             } else {
-                 classList.add('o')
-             }
-             e.target.style.cursor = 'default'
-             checkGameStatus()
-         }
+    switch(difficulty) {
+        case 'easy':
+            if(gameOnGoing && emptySpot(classList)) {
+                classList.add('x')
+            }
+            checkGameStatus()
+            if(gameOnGoing) {
+                computerEasyModeMove()
+            }
+            checkGameStatus()
+            break
+        case 'medium':
+            console.log('medium')
+            break
+        case 'friend':
+            if(gameOnGoing && emptySpot(classList)) {
+                if(xNextTurn){
+                        classList.add('x')
+                } else {
+                        classList.add('o')
+                }
+                e.target.style.cursor = 'default'
+                checkGameStatus()
+            }
+            break
+        default:
+            return
     }
-    
 }
 
 // Event Listeners
@@ -134,21 +151,18 @@ for (const gridDiv of gridDivs) {
 
 diff.addEventListener('change', handleReset)
 
+// play computer's turn on easy mode.
+function computerEasyModeMove() {
+    let randomeMove = () => Math.floor(Math.random() * 9) + 1
+    let computerMove = randomeMove()
 
-// function computerTurn() {
-//     let valid = false
-//     while(!valid) {
-//         const random = Math.floor(Math.random() * 9) + 1
-//         for (const gridDiv of gridDivs) {
-//             if(gridDiv.classList.contains(mapping[random]) && emptySpot(gridDiv.classList)) {
-//                 gridDiv.click()
-//                 valid = true
-//             } 
-//         }
-
-//     }
-    
-// }
+    while(document.querySelector(`.${mapping[computerMove]}`).classList.contains('o')
+             || document.querySelector(`.${mapping[computerMove]}`).classList.contains('x')){
+        computerMove = randomeMove()
+    }
+    document.querySelector(`.${mapping[computerMove]}`).classList.add('o')
+    document.querySelector(`.${mapping[computerMove]}`).style.cursor = 'default'
+}
 
 
 
