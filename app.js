@@ -109,8 +109,6 @@ const handleReset = (e) => {
 }
 
 const handleCellClick = (e) => {
-    console.log('gebna')
-    console.log('money')
     const classList = e.target.classList
     const difficulty = diff.options[diff.selectedIndex].value
     //If position is not occupied, allow user to place letter.
@@ -119,7 +117,6 @@ const handleCellClick = (e) => {
         case 'easy':
             if(gameOnGoing && emptySpot(classList) && playerTurn) {
                 classList.add('x')
-                console.log('saah')
             }
             checkGameStatus()
             if(gameOnGoing && !playerTurn) {
