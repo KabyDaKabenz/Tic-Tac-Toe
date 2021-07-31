@@ -117,8 +117,8 @@ const handleCellClick = (e) => {
         case 'easy':
             if(gameOnGoing && emptySpot(classList) && playerTurn) {
                 classList.add('x')
+                checkGameStatus()
             }
-            checkGameStatus()
             if(gameOnGoing && !playerTurn) {
                 setTimeout(() => {
                     computerEasyModeMove()
