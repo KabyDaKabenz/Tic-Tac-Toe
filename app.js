@@ -15,12 +15,13 @@ let xNextTurn = true
 let winner = null
 let xSymbol = '×'
 let oSymbol = '○'
+let playerTurn = true
 let mapping = {
     1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine' 
 }
 
 
-//functions
+/* functions */
 
 const letterToSymbol = (letter) => {
     return letter == 'x'? xSymbol : oSymbol
@@ -82,6 +83,8 @@ const checkGameStatus = () => {
             status.innerHTML = `<span>${oSymbol} is next</span>`
         }
     }
+
+    playerTurn = !playerTurn
     
 }
 
@@ -91,7 +94,7 @@ const emptySpot = (classlist) => {
 
 // Event handlers
 
-const handleReset = (e) => {
+const handleReset = (e) => { 
    xNextTurn = true
    status.innerHTML = `${xSymbol} is next`
    for (const gridDiv of gridDivs) {
@@ -102,23 +105,29 @@ const handleReset = (e) => {
     winner = null
     gameOnGoing = true
     reset.innerHTML = 'Reset'
+    playerTurn = true
 }
 
 const handleCellClick = (e) => {
+    console.log('gebna')
+    console.log('money')
     const classList = e.target.classList
     const difficulty = diff.options[diff.selectedIndex].value
     //If position is not occupied, allow user to place letter.
 
     switch(difficulty) {
         case 'easy':
-            if(gameOnGoing && emptySpot(classList)) {
+            if(gameOnGoing && emptySpot(classList) && playerTurn) {
                 classList.add('x')
+                console.log('saah')
             }
             checkGameStatus()
-            if(gameOnGoing) {
-                computerEasyModeMove()
+            if(gameOnGoing && !playerTurn) {
+                setTimeout(() => {
+                    computerEasyModeMove()
+                    checkGameStatus()
+                }, 500)
             }
-            checkGameStatus()
             break
         case 'medium':
             console.log('medium')
@@ -139,7 +148,7 @@ const handleCellClick = (e) => {
     }
 }
 
-// Event Listeners
+/* Event Listeners */
 
 // Reset game when 'reset' button is clicked.
 reset.addEventListener('click', handleReset)
@@ -163,9 +172,3 @@ function computerEasyModeMove() {
     document.querySelector(`.${mapping[computerMove]}`).classList.add('o')
     document.querySelector(`.${mapping[computerMove]}`).style.cursor = 'default'
 }
-
-
-
-
-
-
