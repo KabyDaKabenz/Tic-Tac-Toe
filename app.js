@@ -161,13 +161,19 @@ diff.addEventListener('change', handleReset)
 
 // play computer's turn on easy mode.
 function computerEasyModeMove() {
-    let randomeMove = () => Math.floor(Math.random() * 9) + 1
-    let computerMove = randomeMove()
+    let randomMove = () => Math.floor(Math.random() * 9) + 1
+    let computerMove = randomMove()
 
     while(document.querySelector(`.${mapping[computerMove]}`).classList.contains('o')
              || document.querySelector(`.${mapping[computerMove]}`).classList.contains('x')){
-        computerMove = randomeMove()
+        computerMove = randomMove()
     }
     document.querySelector(`.${mapping[computerMove]}`).classList.add('o')
     document.querySelector(`.${mapping[computerMove]}`).style.cursor = 'default'
 }
+
+// play computer's turn on medium mode.
+function computerMediumModeTurn() {
+    
+}
+
